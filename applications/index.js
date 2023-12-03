@@ -11,7 +11,13 @@ const app = express();
 const PORT = process.env.PORT;
 const routes = require("./routes/index");
 
+const cors = require("cors");
+
 const db = require("./models/index");
+
+var corsOptions = {
+  origin: "*",
+};
 
 db.mongoose
   .connect(
@@ -25,6 +31,7 @@ db.mongoose
     console.log("Successfully connected to mongoDB");
   });
 
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

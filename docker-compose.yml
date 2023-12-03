@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  # ROS Orchestrator
+  applications:
+    hostname: applications
+    build: ${APPLICATIONS_BASE_DIR}
+    volumes:
+      - ${APPLICATIONS_BASE_DIR}:/usr/share/applications
+    ports:
+      - 3030:3030
+
+  # MongoDB
+  mongo:
+    image: mongo
+    hostname: mongo
+    volumes:
+      - ${DB_BASE_DIR}:/data/db
+    ports:
+      - 27017:27017

@@ -80,7 +80,25 @@ const getAllApplication = (req, res) => {
     });
 };
 
+const getApplication = (req, res) => {
+  application.findOne({ _id: req.params.id }).then((application) => {
+    if (application) {
+      res.status(200).send({
+        success: true,
+        message: "Application fetched successfully",
+        application,
+      });
+    } else {
+      res.status(500).send({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  });
+};
+
 module.exports = {
   createApplication,
   getAllApplication,
+  getApplication,
 };

@@ -97,8 +97,48 @@ const getApplication = (req, res) => {
   });
 };
 
+const updateApplication = (req, res) => {
+  application.findOne({ _id: req.body._id }).then((application) => {
+    if (application) {
+      application.name = req.body.name;
+      application.email = req.body.email;
+      application.address = req.body.address;
+      application.mobile = req.body.mobile;
+      application.time = Date.now();
+      application
+        .save()
+        .then((updatedApplication) => {
+          if (updatedApplication) {
+            res.status(200).send({
+              success: true,
+              message: "Application updated successfully",
+            });
+          } else {
+            res.status(500).send({
+              success: false,
+              message: "Something went wrong",
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).send({
+            success: false,
+            message: "Something went wrong",
+            err,
+          });
+        });
+    } else {
+      res.status(500).send({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  });
+};
+
 module.exports = {
   createApplication,
   getAllApplication,
   getApplication,
+  updateApplication,
 };
